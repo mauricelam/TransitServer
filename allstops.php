@@ -1,12 +1,12 @@
 <?php 
 
 $source = $_GET['source'];
-if($source == "map"){
-	include "sql.php";
-	$sql = "SELECT name, code, query, latitude, longitude FROM stops";
+if ($source === 'map') {
+	include 'sql.php';
+	$sql = 'SELECT name, code, query, latitude, longitude FROM stops';
 	$query = mysql_query($sql);
 	$stops = array();
-	while($x = mysql_fetch_assoc($query)){
+	while ($x = mysql_fetch_assoc($query)) {
 		$x2 = new stdClass();
 		$x2->n = $x['name'];
 		$x2->c = $x['code'];
@@ -17,15 +17,15 @@ if($source == "map"){
 	}
 	$output = json_encode($stops);
 	if ($_GET['hash'] && $_GET['hash'] == md5(utf8_encode($output))) {
-		echo "cache_unchanged";
+		echo 'cache_unchanged';
 	} else {
 		$gzipoutput = gzencode($output);
-		header('Content-Encoding: gzip'); #
-		header('Content-Length: '.strlen($gzipoutput)); #
+		header('Content-Encoding: gzip');
+		header('Content-Length: '.strlen($gzipoutput));
 		echo $gzipoutput;
 	}
 	SQLhelper::release();
-}else{
-	echo "[]";
+} else {
+	echo '[]';
 }
 ?>

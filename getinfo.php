@@ -19,9 +19,4 @@ if($urlcodes != '' && $codes && count($codes) > 0){
 	echo json_encode($response);
 }
 
-// silent: delete expired cache
-ob_start();
-include 'cron/deleteexpiredcache.php';
-ob_end_clean();
-
 ?>

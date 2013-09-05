@@ -25,7 +25,7 @@ function getCache($url){
 }
 
 function curlAPI($url, $changeset_id){
-	if($changeset_id)
+	if ($changeset_id)
 		$url .= '&changeset_id='.$changesetid;
 	$ch = curl_init($url);
 	$headers = array('Expect:'); 
@@ -38,9 +38,9 @@ function curlAPI($url, $changeset_id){
 
 function getCacheIfAvailable($url, $timeTolerance){
 	$cache = getCache($url);
-	if(!$cache || !$timeTolerance || $cache['updated'] <= strtotime('-'.$timeTolerance)){
+	if (!$cache || !$timeTolerance || $cache['updated'] <= strtotime('-'.$timeTolerance)) {
 		return false;
-	}else{
+	} else {
 		return $cache;
 	}
 }
@@ -51,19 +51,19 @@ function getAPI($url, $timeTolerance){
 		error_log('$cache: '.var_export($cache, true)."\n", 3, 'custom_error');
 		error_log('$url: '.$url."\n", 3, 'custom_error');
 	}
-	if(!$cache || !$timeTolerance || $cache['updated'] <= strtotime('-'.$timeTolerance)){
+	if (!$cache || !$timeTolerance || $cache['updated'] <= strtotime('-'.$timeTolerance)) {
 		$oldset = false;
-		if($cache)
+		if ($cache)
 			$oldset = $cache['changeset'];
 		$response = curlAPI($url, $oldset);
 		$obj = json_decode($response);
-		if((!$oldset || $obj->new_changeset) && $obj->status->code == 200){
+		if ((!$oldset || $obj->new_changeset) && $obj->status->code == 200) {
 			cacheResult($obj->changeset_id, $url, $response);
 			return $response;
-		}else{
+		} else {
 			return $cache['response'];
 		}
-	}else{
+	} else {
 		return $cache['response'];
 	}
 }

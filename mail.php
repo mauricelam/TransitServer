@@ -22,13 +22,9 @@ function send_mail($emailaddress, $fromaddress, $emailsubject, $body)
 function store_mail($emailaddress, $body)
 {
 	send_mail($emailaddress, 'transitcumtd@gmail.com', 'Transit bug report', $body);
-//	include "sql.php";
-//	$sql = "INSERT INTO batchmail (to, body) VALUES ('$emailaddress', '$body')";
-//	$query = mysql_query($sql);
-//	SQLhelper::release();
 }
 
 function bug_report($error) {
-	store_mail("mauricelam@gmail.com", $error);
+	store_mail('mauriceprograms@gmail.com', $error);
 }
 ?>

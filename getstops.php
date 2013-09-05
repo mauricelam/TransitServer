@@ -1,21 +1,20 @@
 <?php 
 
 $query = trim($_GET['text']);
-if($query && $query!=""){
-	include "sql.php";
+if ($query) {
+	include 'sql.php';
 	$stops = array();
 	
 	$code = $query;
-	if(stripos($code, "MTD")===0){
+	if (stripos($code, 'MTD') === 0) {
 		$code = substr($code, 3);
 	}
-	if(is_numeric($code)){
+	if (is_numeric($code)) {
 		$code = intval($code);
 		$sql = "SELECT * FROM stops WHERE code = $code";
-	}else{
-	
+	} else {
 		$query = mysql_real_escape_string($query);
-		$ftquery = "+".str_replace(' ', ' +', $query);
+		$ftquery = '+'.str_replace(' ', ' +', $query);
 		$sql = "SELECT stops.*, (MATCH(stops.name) AGAINST('$ftquery' IN BOOLEAN MODE) + SUM(suggestions.frequency)) as score FROM stops"
 			. " INNER JOIN suggestions ON stops.code = suggestions.stopcode WHERE"
 			. " ((MATCH(suggestions.query) AGAINST('$ftquery' IN BOOLEAN MODE) OR suggestions.query LIKE '$query%') AND suggestions.frequency > 0)"
@@ -23,8 +22,7 @@ if($query && $query!=""){
 	}
 	$query = mysql_query($sql);
 
-	while($x = mysql_fetch_assoc($query)){
-		//var_dump($x);
+	while ($x = mysql_fetch_assoc($query)) {
 		$s = $stops[] = new stdClass();
 		$s->n = $x['name'];
 		$s->c = $x['code'];
@@ -34,6 +32,6 @@ if($query && $query!=""){
 	echo json_encode($stops);
 	SQLhelper::release();
 }else{
-	echo "[]";
+	echo '[]';
 }
 ?>
