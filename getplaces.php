@@ -1,4 +1,7 @@
 <?php 
+
+include_once 'restful.php';
+
 // google local search api key
 $key = "ABQIAAAAeDvQeIC6C0vxFzLt38d5IhTdJ2MDNgc91n-GDdQ_XpteSQEWXxS54cJ-tmNH77eWSR-k1aHKxS_zNA";
 
@@ -30,4 +33,5 @@ if($places->responseStatus == 200){
 	}
 	echo json_encode($outputs);
 }
+
 ?>

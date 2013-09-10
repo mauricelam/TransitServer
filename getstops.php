@@ -1,5 +1,7 @@
 <?php 
 
+include_once 'restful.php';
+
 $query = trim($_GET['text']);
 if ($query) {
 	include 'sql.php';
@@ -34,4 +36,5 @@ if ($query) {
 }else{
 	echo '[]';
 }
+
 ?>

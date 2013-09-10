@@ -1,5 +1,7 @@
 <?php
 
+include_once 'restful.php';
+
 $limit = $_GET['limit'];
 $activeOnly = $_GET['activeonly'] == "true";
 if (!$limit)

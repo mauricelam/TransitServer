@@ -1,4 +1,7 @@
 <?php 
+
+include_once 'restful.php';
+
 $limit = $_GET['limit'];
 if(!$limit)
 	$limit = 2;
@@ -31,4 +34,5 @@ if(isset($_GET['lat']) && isset($_GET['lng'])){
 	echo json_encode($output);
 	SQLhelper::release();
 }
+
 ?>

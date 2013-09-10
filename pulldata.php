@@ -16,9 +16,36 @@ function addPlatform($id, $point){
 include 'sql.php';
 $key = 'fe18d20a15974099a63329fd612d1702';
 
-$enabled = false;
+$enabled = $_GET['enabled'] === 'true';
 
 if ($enabled) {
+
+    $create_platforms = "CREATE TABLE IF NOT EXISTS `platforms2` (
+                          `id` int(255) unsigned NOT NULL AUTO_INCREMENT,
+                          `name` varchar(255) NOT NULL,
+                          `stopid` int(255) unsigned NOT NULL,
+                          `latitude` int(11) NOT NULL,
+                          `longitude` int(11) NOT NULL,
+                          PRIMARY KEY (`id`)
+                        ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;";
+    mysql_query($create_platforms);
+
+    $create_stops = "CREATE TABLE IF NOT EXISTS `stops2` (
+                      `id` int(255) unsigned NOT NULL AUTO_INCREMENT,
+                      `name` varchar(255) NOT NULL,
+                      `code` int(4) unsigned zerofill NOT NULL,
+                      `query` varchar(255) NOT NULL,
+                      `size` int(10) unsigned NOT NULL,
+                      `latitude` int(11) NOT NULL,
+                      `longitude` int(11) NOT NULL,
+                      `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                      PRIMARY KEY (`id`),
+                      UNIQUE KEY `query` (`query`),
+                      UNIQUE KEY `code` (`code`),
+                      FULLTEXT KEY `name` (`name`)
+                    ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;";
+    mysql_query($create_stops);
+
     $url = "http://developer.cumtd.com/api/v2.0/json/GetStops?key=$key";
 
     $ch = curl_init($url);

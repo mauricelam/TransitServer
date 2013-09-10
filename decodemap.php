@@ -1,5 +1,7 @@
 <?php 
 
+include_once 'restful.php';
+
 $query = trim($_GET['text']);
 if($query && $query!=""){
 	include_once 'key.php';

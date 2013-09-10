@@ -23,7 +23,7 @@ class Key {
     }
     
     public static function next() {
-        $turn = ($this->keyturn + 1) % count(self::$KEYS);
+        $turn = (self::$keyturn + 1) % count(self::$KEYS);
         phpFastCache('files')->set('apikeyturn', $turn);
         self::$key = null;
     }

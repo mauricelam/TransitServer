@@ -1,5 +1,7 @@
 <?php 
 
+include_once 'restful.php';
+
 $source = $_GET['source'];
 if ($source === 'map') {
 	include 'sql.php';
@@ -19,10 +21,7 @@ if ($source === 'map') {
 	if ($_GET['hash'] && $_GET['hash'] == md5(utf8_encode($output))) {
 		echo 'cache_unchanged';
 	} else {
-		$gzipoutput = gzencode($output);
-		header('Content-Encoding: gzip');
-		header('Content-Length: '.strlen($gzipoutput));
-		echo $gzipoutput;
+		echo $output;
 	}
 	SQLhelper::release();
 } else {

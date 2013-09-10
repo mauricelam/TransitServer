@@ -1,6 +1,6 @@
 <?php 
-ini_set('display_errors', '0');
 
+include_once 'restful.php';
 include_once 'departures.php';
 include_once 'key.php';
 
